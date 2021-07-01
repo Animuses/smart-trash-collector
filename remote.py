@@ -1,30 +1,37 @@
 #遥控程序 By Animuses
 import CAR
 import time
-import keyboard as k
+import pygame
+from pygame.locals import *
+import os
 
 CAR.init()
+pygame.init()
+size = width, hight = 100,100
+screen = pygame.display.set_mode(size)
 while True:
-    if k.is_pressed('w'):
-        CAR.forward(80,0.001)
-        print('Forward')
-        continue
-    elif k.is_pressed('s'):
-        CAR.backward(80,0.001)
-        print('Backward')
-        continue
-    elif k.is_pressed('a'):
-        CAR.left_running(30,0.001)
-        print('Left')
-        continue
-    elif k.is_pressed('d'):
-        CAR.right_running(30,0.001)
-        print('Right')
-        continue
-    elif k.is_pressed('space'):
-        CAR.stop(0.01)
-        print('You pressed space!')
-        continue
-    elif k.is_pressed('q'):
-        print('Quit!')
-        break
+    for event in pygame.event.get():
+        if event.type == KEYDOWN:
+            if event.key == K_UP:
+                CAR.forward(80)
+                print('Forward')
+            if event.key == K_DOWN:
+                CAR.backward(80)
+                print('Backward')
+            if event.key == K_LEFT:
+                CAR.left_spin(80)
+                print('Left')
+            if event.key == K_RIGHT:
+                CAR.right_spin(80)
+                print('Right')
+            if event.key == K_ESCAPE:
+                print('Quit!')
+                CAR.beep()
+                CAR.shutdown()
+                pygame.quit()
+                os._exit(0)
+                break
+                break
+        if event.type == KEYUP:
+            CAR.stop()
+            
